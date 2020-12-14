@@ -29,6 +29,7 @@ RUN apache2ctl -M | grep mpm
 RUN a2dismod mpm_prefork
 RUN a2dismod mpm_worker
 RUN a2enmod mpm_event
+RUN a2enmod rewrite
 RUN mkdir -p /var/lock/apache2 /var/run/apache2
 RUN a2enmod ssl
 RUN a2enmod headers
