@@ -40,6 +40,9 @@ RUN a2enconf php.conf
 
 COPY sites-available /etc/apache2/sites-available/
 RUN sed -i 's/CustomLog/#CustomLog/' /etc/apache2/conf-available/other-vhosts-access-log.conf
+RUN sed -i 's/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf
+RUN sed -i 's/KeepAlive On/KeepAlive Off/' /etc/apache2/apache2.conf
+RUN sed -i 's/MaxKeepAliveRequests 100/MaxKeepAliveRequests 1024/' /etc/apache2/apache2.conf
 
 #setup git
 RUN apt-get install -y git
@@ -88,7 +91,6 @@ COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 ADD config/index.html /var/www/index.html
 ADD config/index.php /var/www/index.php
-COPY config/apache2.conf /etc/apache2/apache2.conf
 
 COPY config/apache_enable.sh apache_enable.sh
 RUN chmod 744 apache_enable.sh
