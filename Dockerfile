@@ -47,7 +47,7 @@ RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private
 COPY config/php5-fpm.conf /etc/apache2/conf-available/php5-fpm.conf
 RUN a2enconf php5-fpm
 
-COPY config/sites-available /etc/apache2/sites-available/
+COPY sites-available /etc/apache2/sites-available/
 RUN sed -i 's/CustomLog/#CustomLog/' /etc/apache2/conf-available/other-vhosts-access-log.conf
 RUN sed -i 's/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf
 RUN sed -i 's/KeepAlive On/KeepAlive Off/' /etc/apache2/apache2.conf
