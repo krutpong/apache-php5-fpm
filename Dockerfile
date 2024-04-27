@@ -88,7 +88,7 @@ COPY config/apache_enable.sh /usr/local/bin/apache_enable.sh
 RUN chmod +x /usr/local/bin/apache_enable.sh
 
 # Copy Supervisor configuration
-COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 # Start Supervisor
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]
