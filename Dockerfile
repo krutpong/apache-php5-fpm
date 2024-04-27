@@ -23,6 +23,12 @@ RUN apt-get install -y apache2
 # Install Apache modules
 RUN apt-get install -y libapache2-mod-fcgid
 
+# Add PHP repository
+RUN add-apt-repository -y ppa:ondrej/php
+
+# Update package lists again
+RUN apt-get update
+
 # Install PHP5 and its extensions
 RUN apt-get install -y php5 \
     php5-fpm \
@@ -36,6 +42,9 @@ RUN apt-get install -y php5 \
     php5-cli \
     php-pear \
     php5-dev
+
+# Clean up
+RUN apt-get clean
 
 # Install Git
 RUN apt-get install -y git
