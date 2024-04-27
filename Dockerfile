@@ -30,8 +30,7 @@ RUN apt-get update && \
     imagemagick \
     php5-imagick \
     curl \
-    zip \
-    && apt-get clean
+    zip
 
 # Setup timezone
 RUN ln -fs /usr/share/zoneinfo/Asia/Bangkok /etc/localtime && \
@@ -53,9 +52,6 @@ RUN sed -i 's/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf
 RUN sed -i 's/KeepAlive On/KeepAlive Off/' /etc/apache2/apache2.conf
 RUN sed -i 's/MaxKeepAliveRequests 100/MaxKeepAliveRequests 1024/' /etc/apache2/apache2.conf
 
-# Start Apache service during container runtime
-CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
-
 # Expose ports
 EXPOSE 80
 EXPOSE 443
@@ -67,3 +63,6 @@ COPY config/index.php /var/www/html/index.php
 # Set permissions for startup script
 COPY config/apache_enable.sh /usr/local/bin/apache_enable.sh
 RUN chmod +x /usr/local/bin/apache_enable.sh
+
+# Start Supervisor
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]
