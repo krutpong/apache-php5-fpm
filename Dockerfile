@@ -12,7 +12,7 @@ RUN apt-get update && \
     tzdata \
     supervisor \
     apache2 \
-    libapache2-mod-fastcgi \
+    libapache2-mod-fcgid \
     php5 \
     php5-fpm \
     php5-mysql \
@@ -38,7 +38,7 @@ RUN ln -fs /usr/share/zoneinfo/Asia/Bangkok /etc/localtime && \
     dpkg-reconfigure -f noninteractive tzdata
 
 # Enable Apache modules
-RUN a2enmod rewrite ssl headers
+RUN a2enmod rewrite ssl headers proxy_fcgi
 
 # SSL certificate generation
 RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/ssl-cert-snakeoil.key -out /etc/ssl/certs/ssl-cert-snakeoil.pem -subj "/C=AT/ST=Vienna/L=Vienna/O=Security/OU=Development/CN=example.com"
